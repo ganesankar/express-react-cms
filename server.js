@@ -1,7 +1,13 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const ejs = require('ejs');
+const router = express.Router();
 
+app.engine('html', ejs.renderFile);
+app.set('view engine', 'html');
+
+app.set('views', __dirname + '/');
 app.use(cors());
 
 app.use(express.static('build', {
@@ -10,6 +16,8 @@ app.use(express.static('build', {
 
 app.use('/api', require('./src/server'));
 
+app.use('/admin', require('./src/admin'));
+app.use('/login', require('./src/login'));
 app.get("/", (req, res) => {
     return res.sendFile(__dirname+'/build/index.html', err => (err.status === 404) ? res.status(404).send("<b>Error: </b>Seems like there is currently no build present for this project. Please run <code>npm run build</code> and restart the server in order to continue. Thank you.") : res.status(500).send("Internal Server Error"));
 });
