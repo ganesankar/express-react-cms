@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.static('build', {
     setHeaders: res => res.req.path.split("/")[1] === "static" && res.setHeader('Cache-Control', 'max-age=31536000')
 }));
+app.use(express.static('adminPublic'))
 
 app.use('/api', require('./src/server'));
 
