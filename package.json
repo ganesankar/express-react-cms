@@ -12,8 +12,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "buildui": "react-scripts build",
-    "build": "react-scripts build && netlify-lambda build express",
+    "build": "react-scripts build",
+    "builduu": "react-scripts build && netlify-lambda build express",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -n \"React App,Express Server\" \"react-scripts start\" -c \"bgBlue,bgGreen\" \"nodemon server.js\""
