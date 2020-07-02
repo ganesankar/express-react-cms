@@ -12,7 +12,7 @@
   "scripts": {
     "start": "node server.js",
     "buildui": "react-scripts build",
-    "build": "concurrently -n \"React App,Express Server\" \"react-scripts build\" -c \"bgBlue,bgGreen\" \"netlify-lambda build express\"",
+    "build": "react-scripts build && netlify-lambda build express",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -n \"React App,Express Server\" \"react-scripts start\" -c \"bgBlue,bgGreen\" \"nodemon server.js\""
@@ -37,8 +37,6 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "nodemon": "^1.19.1",
-
-    
     "netlify-lambda": "^1.6.3",
     "serverless-http": "^2.3.0"
   },
