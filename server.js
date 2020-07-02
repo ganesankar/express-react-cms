@@ -16,10 +16,12 @@ app.use(express.static('build', {
 
 app.use('/api', require('./src/server'));
 
-app.use('/admin', require('./src/admin'));
+app.get("/admin", (req, res) => {
+    return res.sendFile(__dirname+'/adminPublic/index.html', err => (err.status === 404) ? res.status(404).send("<b>Error: </b>Seems like there is currently no build present for this project. Please run <code>npm run build</code> and restart the server in order to continue. Thank you.") : res.status(500).send("Internal Server Error"));
+});
 app.use('/login', require('./src/login'));
 app.get("/", (req, res) => {
     return res.sendFile(__dirname+'/build/index.html', err => (err.status === 404) ? res.status(404).send("<b>Error: </b>Seems like there is currently no build present for this project. Please run <code>npm run build</code> and restart the server in order to continue. Thank you.") : res.status(500).send("Internal Server Error"));
 });
 
-app.listen(process.env.PORT || 5000, () => console.log(`Server is listening on port ${process.env.PORT || 5000}`));
+app.listen(process.env.PORT || 4000, () => console.log(`Server is listening on port ${process.env.PORT || 4000}`));

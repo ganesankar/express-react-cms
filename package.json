@@ -7,6 +7,8 @@
     "cors": "^2.8.5",
     "ejs": "^3.1.3",
     "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "luxon": "^1.21.3",
     "moment": "^2.27.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.1",
@@ -16,15 +18,16 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sirv-cli": "^0.4.4"
   },
   "scripts": {
     "start": "node server.js",
-    "build": "react-scripts build",
+    "build": "react-scripts build && rollup -c",
     "builduu": "react-scripts build && netlify-lambda build express",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently -n \"React App,Express Server\" \"react-scripts start\" -c \"bgBlue,bgGreen\" \"nodemon server.js\""
+    "dev": "concurrently  \"react-scripts start\"  \"nodemon server.js\" \"sirv adminPublic --single\" "
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -47,7 +50,14 @@
     "express": "^4.17.1",
     "nodemon": "^1.19.1",
     "netlify-lambda": "^1.6.3",
-    "serverless-http": "^2.3.0"
+    "serverless-http": "^2.3.0",
+    "rollup": "^1.10.1",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-terser": "^4.0.4",
+    "svelte": "^3.0.0"
   },
   "proxy": "http://localhost:5000"
 }
