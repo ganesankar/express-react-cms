@@ -3,5 +3,6 @@
     publish = "build"
 
 
+
 [template.environment]
     REACT_APP_PROJECT_SERVER = "Your app's API server URL in the format of 'https://app.com'"
