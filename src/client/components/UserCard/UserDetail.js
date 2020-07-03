@@ -1,17 +1,17 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, {  useState } from 'react';
 import { connect } from 'react-redux';
 import { getImgPlaceHolder } from './../../utils';
 const UserDetail = ({ user, type, userLogged, onInputChange, cancelEdit }) => {
-  const [editProfileView, editProfileToggle] = useState(false);
+  const [editProfileView] = useState(false);
 
   const { data } = user;
 
   //const backData = JSON.parse(JSON.stringify(data));
-  let claimedBy = '';
+
   let pic = '';
   let name = '';
   if (data) {
-    claimedBy = data.claimedBy;
+    
     if (data.basic) {
       name = data.basic.find((x) => x.field === 'fName').val || '';
       pic = getImgPlaceHolder(name);
@@ -22,13 +22,7 @@ const UserDetail = ({ user, type, userLogged, onInputChange, cancelEdit }) => {
     }
   }
 
-  console.log(`${userLogged} ${claimedBy}`);
-
-  const cancelEditL = () => {
-    //data = backdata;
-    cancelEdit();
-    editProfileToggle(false);
-  };
+ 
 
   return (
     <>

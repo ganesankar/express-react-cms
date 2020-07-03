@@ -4,7 +4,6 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 
@@ -16,7 +15,6 @@ import {
   getLocalUser,
   logoutLocalUser,
 } from '../../store/actions/auth';
-import { config } from '../../services/config';
 
 import './styles.css';
 
@@ -39,11 +37,7 @@ const Header = ({
     getLocalUser();
   }, []);
 
-  function getCurrentUser() {
-    let user = null;
-    user = auth.googleUser ? 'google' : auth.localUser ? 'local' : null;
-    return user;
-  }
+
 
   const { navMenu } = nav;
   return (

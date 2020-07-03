@@ -17,8 +17,6 @@ import * as serviceWorker from './client/serviceWorker';
 
 import rootReducer from './client/store/reducers';
 
-import { config } from './client/services/config';
-
 import Header from './client/components/Header/Header';
 import MyToast from './client/components/MyToast';
 

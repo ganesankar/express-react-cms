@@ -28,16 +28,14 @@ const Students = ({
 
   useEffect(() => {
     loadStudents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const openUserView = (user) => {
     console.log('g', user);
     setUserViewData(user);
     UserModelToggle(true);
   };
-  const updateUserView = (data) => {
-    userViewData.data = data;
-    setUserViewData(userViewData);
-  };
+ 
 
   const onInputChange = (group, field, value) => {
     console.log(`${group} ${field} ${value}`);
