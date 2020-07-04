@@ -34,7 +34,7 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "svelte-router": "^3.0.0-alpha.2",
+    "svelte-router": "^2.0.0-beta.1",
     "sveltestrap": "^3.4.0"
   },
   "scripts": {
