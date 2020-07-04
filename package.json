@@ -34,22 +34,25 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "rollup-plugin-asset-sync": "0.0.7",
+    "rollup-plugin-cleaner": "^1.0.0",
+    "rollup-plugin-fill-html": "^1.1.0",
+    "rollup-plugin-scss": "^2.5.0",
+    "rollup-plugin-serve": "^1.0.1",
     "sirv-cli": "^0.4.6",
-    "svelte-routing": "^1.4.2",
+    "svelte-preprocess": "^3.9.11",
+    "svelte-router": "^3.0.0-alpha.2",
     "sveltestrap": "^3.4.0"
   },
   "scripts": {
-    "adminbuild": "rollup -c",
-    "adminautobuild": "rollup -c -w",
-    "admindev": "run-p adminstart:dev adminautobuild",
-    "adminstart": "sirv adminPublic --single",
-    "adminstart:dev": "sirv adminPublic --single --admindev",
+    "adminBuild": "rollup -c",
+    "adminDev": "rollup -c -w",
     "start": "node server.js",
     "build": "react-scripts build && rollup -c",
     "builduu": "react-scripts build && netlify-lambda build express",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently  \"react-scripts start\"  \"nodemon server.js\" \"run-p adminstart:admindev adminautobuild\" "
+    "dev": "concurrently  \"react-scripts start\"  \"nodemon server.js\" \"rollup -c -w\" "
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -67,6 +70,7 @@
     ]
   },
   "devDependencies": {
+    "node-sass": "^4.11.0",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.1",
     "express": "^4.17.1",

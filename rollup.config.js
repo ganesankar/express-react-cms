@@ -1,47 +1,61 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
+import scss from 'rollup-plugin-scss'
+import html from 'rollup-plugin-fill-html';
+import path from 'path'
+import serve from 'rollup-plugin-serve';
+import livereload from 'rollup-plugin-livereload';
+import assetSync from 'rollup-plugin-asset-sync';
 
 const production = !process.env.ROLLUP_WATCH;
 
+const buildDir = production ? 'dist' : '.dev';
+
 export default {
-	input: 'adminsrc/main.js',
+	input: path.join(__dirname,'adminsrc','main.js'),
 	output: {
 		sourcemap: true,
 		format: 'iife',
-		name: 'app',
-		file: 'adminPublic/bundle.js'
+		name: 'myapp',
+		file: path.join(__dirname,buildDir,'bundle.js') 
 	},
 	plugins: [
-		svelte({
-			// enable run-time checks when not in production
-			dev: !production,
-			// we'll extract any component CSS out into
-			// a separate file — better for performance
-			css: css => {
-				css.write('adminPublic/bundle.css')
-			}
+		assetSync({
+            input: path.join(__dirname,'adminsrc','assets'),
+            output: path.join(__dirname,buildDir,'assets')
+        }),
+		scss({
+			output: path.join(__dirname,buildDir,'bundle.css'),
+			outputStyle: production ? 'compressed' : 'expanded'
 		}),
-
-		// If you have external dependencies installed from
-		// npm, you'll most likely need these plugins. In
-		// some cases you'll need additional configuration —
-		// consult the documentation for details:
-		// https://github.com/rollup/rollup-plugin-commonjs
-		resolve({ browser: true }),
+		svelte({
+			
+			
+			dev: !production,
+			emitCss: true,
+			preprocess: require('svelte-preprocess')({ 
+				transformers: {
+					scss: true,
+				}
+			})
+		}),
+		html({
+			template: path.join(__dirname,'adminsrc','index.html'),
+			filename: 'index.html'
+		}),
+		resolve(),
 		commonjs(),
-
-		// Watch the `adminPublic` directory and refresh the
-		// browser on changes when not in production
-		!production && livereload('adminPublic'),
-
-		// If we're building for production (npm run build
-		// instead of npm run dev), minify
-		production && terser()
-	],
-	watch: {
-		clearScreen: false
-	}
+		(production && terser()),
+		(!production && serve({
+			contentBase: path.join(__dirname, buildDir),
+			historyApiFallback: true,
+			host: 'localhost',
+			port: 5000,
+		})),
+		(!production && livereload({
+			watch:path.join(__dirname, buildDir)
+		}))	  
+	]
 };

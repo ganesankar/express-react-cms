@@ -1,0 +1,102 @@
+<div id="wrapper">
+	<nav class="navbar navbar-default navbar-static-top m-b-0 p-0">
+		<div class="navbar-header">
+			<div class="top-left-part">
+				<a class="logo" href="/">
+					<b>
+						FERNS ADMIN
+					</b>
+					<span class="hidden-xs">
+						FA
+					</span> 
+				</a>
+			</div>
+			<ul class="nav navbar-top-links navbar-right pull-right">
+				<li>
+					<a class="nav-toggler open-close waves-effect waves-light hidden-md hidden-lg" href="javascript:void(0)"><i class="fa fa-bars"></i></a>
+				</li>
+				
+				<li>
+					<a class="profile-pic" href="#"> <b class="hidden-xs">Steave</b></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="navbar-default sidebar" role="navigation">
+		<div class="sidebar-nav slimscrollsidebar">
+			<div class="sidebar-head">
+				<h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
+			</div>
+			<ul class="nav" id="side-menu">
+				<li style="padding: 70px 0 0;">
+					<RouterLink class="nav" to="/">Home</RouterLink>
+				</li>
+				<li>
+					<RouterLink class="nav" to="/pages">Pages</RouterLink>
+					</li>
+				<li>
+					<a href="basic-table.html" class="waves-effect"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Basic Table</a>
+				</li>
+				<li>
+					<a href="fontawesome.html" class="waves-effect"><i class="fa fa-font fa-fw" aria-hidden="true"></i>Icons</a>
+				</li>
+				<li>
+					<a href="map-google.html" class="waves-effect"><i class="fa fa-globe fa-fw" aria-hidden="true"></i>Google Map</a>
+				</li>
+				<li>
+					<a href="blank.html" class="waves-effect"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Blank Page</a>
+				</li>
+				<li>
+					<a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
+				</li>
+
+			</ul>
+			<div class="center p-20">
+				 <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger btn-block waves-effect waves-light">Upgrade to Pro</a>
+			 </div>
+		</div>
+		
+	</div>
+	<div>
+		
+		<div id="page-wrapper">
+			<Router />
+			<footer class="footer text-center"> 2017 &copy; Ample Admin brought to you by wrappixel.com </footer>
+        </div>
+		
+	</div>
+</div>
+
+
+<script>
+	import Router from './components/Router.html'
+	import RouterLink from './components/RouterLink.html'
+  
+	export default {
+        components: {
+			Router,RouterLink
+        }
+	}
+</script>
+
+<style type="text/scss">
+	@import "./styles/vars";
+
+	:global(a.nav) {
+		color: rgb(78, 81, 241);
+	}
+
+	:global(a.router-link-active) {
+		color: $nav-color-active;
+	}
+
+	img{
+		height:100px;
+		margin-bottom: 20px;
+	}
+
+	#container{
+		text-align: center;
+	}
+</style>
