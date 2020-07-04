@@ -18,7 +18,7 @@ app.use(express.static('build', {
 }));
 
 app.use(express.static('dist', {
-    setHeaders: res => res.req.path.split("/")[1] === "static" && res.setHeader('Cache-Control', 'max-age=31536000')
+    setHeaders: res => res.req.path.split("/")[1] === "assets" && res.setHeader('Cache-Control', 'max-age=31536000')
 }));
 app.use(compression());
 
