@@ -16,9 +16,10 @@ app.use(cors());
 app.use(express.static('build', {
     setHeaders: res => res.req.path.split("/")[1] === "static" && res.setHeader('Cache-Control', 'max-age=31536000')
 }));
-app.use(express.static('dist'))
 
-
+app.use(express.static('dist', {
+    setHeaders: res => res.req.path.split("/")[1] === "static" && res.setHeader('Cache-Control', 'max-age=31536000')
+}));
 app.use(compression());
 
 app.use(bodyParser.urlencoded({ extended: false }));
