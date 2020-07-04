@@ -22,7 +22,7 @@ import MyToast from './client/components/MyToast';
 
 import Home from './client/pages/Home';
 import Students from './client/pages/Students';
-
+import Error from './client/pages/Error';
 import { menuAll } from './client/constants/Menu';
 const Root = () => {
     //

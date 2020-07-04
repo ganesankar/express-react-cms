@@ -1,6 +1,6 @@
 /* Import faunaDB sdk */
 const faunadb = require("faunadb");
-
+const moment = require('moment'); 
 const q = faunadb.query;
 const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
@@ -8,34 +8,58 @@ const client = new faunadb.Client({
 
 const _ = require("lodash");
 const express = require("express");
-const jwt = require("express-jwt")({
-  secret: process.env.JWT_SERVER_SECRET,
-  algorithms: ["RS256"],
-});
+var jwt = require('jsonwebtoken');
+var bcrypt = require("bcryptjs");
+var Q = require("q");
 const router = express.Router();
 
-const collection = "pages";
+const collection = "users";
 // routes
-router.get("/", getAll);
-router.get("/slug/:slug", getBySlug);
-router.get("/ifSlugExists/:slug", checkBySlug);
+router.post("/authenticate", authenticateUser);
+router.get("/user/:slug", getBySlug);
+router.get("/username/:username", checkByUserName);
 router.get("/:_id", getById);
-router.post("/", jwt, create);
-router.put("/:_id", jwt,update);
-router.delete("/:_id", jwt, _delete);
+router.post("/", create);
+router.put("/:_id",  update);
+router.delete("/:_id",  _delete);
 
 module.exports = router;
 
-function getAll(req, res) {
+function authenticateUser(req, res) {
   return client
     .query(q.Paginate(q.Documents(q.Collection(collection))))
     .then((response) => {
       const content = response.data;
+      console.log("content",content);
       const contentQuery = content.map((ref) => {
         return q.Get(ref);
       });
+      console.log("contentQuery",contentQuery);
       return client.query(contentQuery).then((data) => {
-        return res.status(200).json(data);
+        console.log("data",data);
+        const item =
+          _.find(data, function (o) {
+            return o.data.username === req.body.username;
+          });
+          console.log("item",item);
+          console.log("req.body",req.body.password);
+        if (item && bcrypt.compareSync(req.body.password, item.data.hash)) {
+          // authentication successful
+          console.log("authentication successful",item);
+          const retdata = item.data;
+          delete retdata.hash;
+          console.log("authentication tok",retdata);
+          console.log("asec",process.env.JWT_SERVER_SECRET);
+          const accessToken = jwt.sign(retdata, process.env.JWT_SERVER_SECRET);
+          //const accessToken = jwt.sign({ foo: 'bar' }, process.env.JWT_SERVER_SECRET, { algorithm: 'RS256' });
+          console.log(" accessToken",accessToken);
+          return res.status(200).json(accessToken);
+        } else {
+          // authentication failed
+          console.log("authentication failed",item);
+          return res.status(400).json({});
+        }
+        
       });
     })
     .catch((error) => {
@@ -66,7 +90,7 @@ function getBySlug(req, res) {
       return res.status(400).json(error);
     });
 }
-function checkBySlug(req, res) {
+function checkByUserName(req, res) {
   return client
     .query(q.Paginate(q.Documents(q.Collection(collection))))
     .then((response) => {
@@ -77,14 +101,10 @@ function checkBySlug(req, res) {
       return client.query(contentQuery).then((data) => {
         const item =
           _.find(data, function (o) {
-            return o.data.slug === req.params.slug;
-          }) || {};
-        if (Object.keys(item).length > 0) {
-          return res
-            .status(200)
-            .json({ slug: req.params.slug, available: false });
-        }
-        return res.status(200).json({ slug: req.params.slug, available: true });
+            return o.data.username === req.params.username;
+          }) ;
+        const available = item ? true :false;
+        return res.status(200).json({ username: req.params.username, available });
       });
     })
     .catch((error) => {
@@ -103,20 +123,26 @@ function getById(req, res) {
 }
 
 function create(req, res) {
-  const item = {
-    data: req.body,
-  };
-  return client
-    .query(q.Create(q.Ref(`classes/${collection}`), item))
-    .then((response) => {
-      console.log("success", response);
-      return res.status(200).json(response);
-    })
-    .catch((error) => {
-      console.log("error", error);
-      return res.status(400).json(error);
-    });
-}
+    console.log("eq.body",req.body)
+    var user = req.body;
+    user.hash = bcrypt.hashSync(req.body.password, 10);
+    delete user.password;
+    user.created =moment().format();
+    const item = {
+        data: user,
+      };
+    
+    return client
+      .query(q.Create(q.Ref(`classes/${collection}`), item))
+      .then((response) => {
+        console.log("success", response);
+        return res.status(200).json(response);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        return res.status(400).json(error);
+      });
+  }
 
 function update(req, res) {
   const data = JSON.parse(req.body);

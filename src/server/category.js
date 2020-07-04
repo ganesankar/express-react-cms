@@ -14,7 +14,7 @@ const jwt = require("express-jwt")({
 });
 const router = express.Router();
 
-const collection = "pages";
+const collection = "category";
 // routes
 router.get("/", getAll);
 router.get("/slug/:slug", getBySlug);
