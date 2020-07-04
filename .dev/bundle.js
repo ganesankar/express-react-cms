@@ -519,7 +519,7 @@ var myapp = (function () {
     			a0.target = "_blank";
     			a0.className = "btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light";
     			addLoc(a0, file, 5, 12, 248);
-    			a1.href = "#";
+    			a1.href = "/";
     			addLoc(a1, file, 7, 20, 479);
     			addLoc(li0, file, 7, 16, 475);
     			ol.className = "breadcrumb";
@@ -1228,7 +1228,7 @@ var myapp = (function () {
     			a0.target = "_blank";
     			a0.className = "btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light";
     			addLoc(a0, file$2, 6, 12, 258);
-    			a1.href = "#";
+    			a1.href = "/";
     			addLoc(a1, file$2, 12, 20, 535);
     			addLoc(li0, file$2, 12, 16, 531);
     			li1.className = "active";
