@@ -6,10 +6,12 @@ const client = new faunadb.Client({
 });
 
 
+const _ = require("lodash");
 const express = require("express");
 const router = require("express").Router();
 var jwt = require("jsonwebtoken");
 
+var bcrypt = require("bcryptjs");
 
 const collection = "users";
 
@@ -24,8 +26,6 @@ router.get("/", function (req, res) {
 
 router.post("/", function (req, res) {
   var viewData = { success: true };
-  console.log("body",req.body)
-  console.log("d",__dirname);
   if (req.body && req.body.username && req.body.password) {
     return client
       .query(q.Paginate(q.Documents(q.Collection(collection))))
@@ -35,9 +35,16 @@ router.post("/", function (req, res) {
           return q.Get(ref);
         });
         return client.query(contentQuery).then((data) => {
+          if(data.length === 0){
+            res.render(__dirname + "/template/index.html", {
+              error: "Unable to Login!",
+              username: req.body.username,
+            });
+          }
           const item = _.find(data, function (o) {
             return o.data.username === req.body.username;
           });
+
           if (item && bcrypt.compareSync(req.body.password, item.data.hash)) {
             const retdata = item.data;
             delete retdata.hash;
@@ -49,6 +56,12 @@ router.post("/", function (req, res) {
               (req.query.returnUrl &&
                 decodeURIComponent(req.query.returnUrl)) ||
               "/admin";
+              console.log(req.session.token)
+              if (req.get('host').indexOf("localhost") > -1) {
+                returnUrl = "http://localhost:5000/"
+              }
+
+              returnUrl+= `?token=${req.session.token}`;
             return res.redirect(returnUrl);
           } else {
             res.render(__dirname + "/template/index.html", {

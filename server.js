@@ -2,7 +2,10 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const ejs = require('ejs');
+var compression = require('compression');
 const router = express.Router();
+const session = require('express-session');
+const bodyParser = require('body-parser');
 
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
@@ -14,6 +17,17 @@ app.use(express.static('build', {
     setHeaders: res => res.req.path.split("/")[1] === "static" && res.setHeader('Cache-Control', 'max-age=31536000')
 }));
 app.use(express.static('adminPublic'))
+
+
+app.use(compression());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(session({
+    secret: process.env.JWT_SERVER_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
 
 app.use('/api', require('./src/server'));
 app.use('/api/pages', require('./src/server/pages'));

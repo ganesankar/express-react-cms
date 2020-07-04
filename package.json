@@ -9,6 +9,8 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^4.5.0",
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "ejs": "^3.1.3",
     "express": "^4.17.1",
@@ -21,6 +23,7 @@
     "moment": "^2.27.0",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.10",
+    "npm-run-all": "^4.1.5",
     "q": "^1.5.1",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.1",
@@ -31,16 +34,22 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "sirv-cli": "^0.4.4",
-    "svelte-routing": "^1.4.2"
+    "sirv-cli": "^0.4.6",
+    "svelte-routing": "^1.4.2",
+    "sveltestrap": "^3.4.0"
   },
   "scripts": {
+    "adminbuild": "rollup -c",
+    "adminautobuild": "rollup -c -w",
+    "admindev": "run-p adminstart:dev adminautobuild",
+    "adminstart": "sirv adminPublic --single",
+    "adminstart:dev": "sirv adminPublic --single --admindev",
     "start": "node server.js",
     "build": "react-scripts build && rollup -c",
     "builduu": "react-scripts build && netlify-lambda build express",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently  \"react-scripts start\"  \"nodemon server.js\" \"sirv adminPublic --single --dev rollup -c -w\" "
+    "dev": "concurrently  \"react-scripts start\"  \"nodemon server.js\" \"run-p adminstart:admindev adminautobuild\" "
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -58,19 +67,19 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^4.1.1",
     "body-parser": "^1.19.0",
+    "concurrently": "^4.1.1",
     "express": "^4.17.1",
-    "nodemon": "^1.19.1",
     "netlify-lambda": "^1.6.3",
-    "serverless-http": "^2.3.0",
+    "nodemon": "^1.19.1",
     "rollup": "^1.10.1",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-livereload": "^1.0.0",
     "rollup-plugin-node-resolve": "^4.2.3",
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^4.0.4",
-    "svelte": "^3.0.0"
+    "serverless-http": "^2.3.0",
+    "svelte": "^3.23.2"
   },
   "proxy": "http://localhost:5000"
 }

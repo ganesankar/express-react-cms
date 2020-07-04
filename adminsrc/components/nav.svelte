@@ -1,29 +1,45 @@
 <script>
-  export let content;
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
+  } from 'sveltestrap';
+
+  let isOpen = false;
+
+  function handleUpdate(event) {
+    isOpen = event.detail.isOpen;
+  }
 </script>
 
-<main>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="/"> Ganesan Karuppaiya</a>
-    </div>
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a
-            href="#/"
-            class="navbar-burger burger navbar-link button is-primary">
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-          </a>
-          <div class="navbar-dropdown is-right">
-            {#each content as item (item.id)}
-              <a href="#{item.type}" class="navbar-item">{item.type}</a>
-            {/each}
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-</main>
+<Navbar color="light" light expand="md">
+  <NavbarBrand href="/">sveltestrap</NavbarBrand>
+  <NavbarToggler on:click={() => (isOpen = !isOpen)} />
+  <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
+    <Nav class="ml-auto" navbar>
+      <NavItem>
+        <NavLink href="#components/">Components</NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="https://github.com/bestguy/sveltestrap">GitHub</NavLink>
+      </NavItem>
+      <UncontrolledDropdown nav inNavbar>
+        <DropdownToggle nav caret>Options</DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem>Option 1</DropdownItem>
+          <DropdownItem>Option 2</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>Reset</DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    </Nav>
+  </Collapse>
+</Navbar>
