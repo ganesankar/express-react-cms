@@ -11,7 +11,7 @@ import assetSync from 'rollup-plugin-asset-sync';
 
 const production = !process.env.ROLLUP_WATCH;
 
-const buildDir = production ? 'dist' : '.dev';
+const buildDir = production ? 'admin' : '.dev';
 
 export default {
 	input: path.join(__dirname,'adminsrc','main.js'),
