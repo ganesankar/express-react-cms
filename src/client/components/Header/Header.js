@@ -41,15 +41,14 @@ const Header = ({
 
   const { navMenu } = nav;
   return (
+    <header>
     <Navbar
       collapseOnSelect
       expand="lg"
-      bg="primary"
-      variant="dark"
-      fixed="top"
+     className="js-navbar-scroll navbar fixed-top navbar-expand-lg navbar-dark"
     >
-      <Container>
-        <Navbar.Brand href="/"> REVIT 08</Navbar.Brand>
+      <Container fluid>
+        <Navbar.Brand href="/"> FERNS</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto" activeKey={pathname}>
@@ -101,6 +100,7 @@ const Header = ({
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    </header>
   );
 };
 export default connect(

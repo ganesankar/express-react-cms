@@ -11,6 +11,8 @@ import Container from 'react-bootstrap/Container';
   import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './client/styles/steam.css';
 import './client/index.css';
 //import App from './client/App';
 import * as serviceWorker from './client/serviceWorker';
@@ -22,6 +24,9 @@ import MyToast from './client/components/MyToast';
 
 import Home from './client/pages/Home';
 import Students from './client/pages/Students';
+import Services from './client/pages/Services';
+import Solutions from './client/pages/Solutions';
+
 import Error from './client/pages/Error';
 import { menuAll } from './client/constants/Menu';
 const Root = () => {
@@ -49,14 +54,18 @@ const Root = () => {
         setDialog={"setDialog"}
         appConfig={"appConfig"}
       />
-          <Container className="margin-top">
+          <Container className="m-0 p-0 margin-top" fluid>
             <Switch>
-              <Route path="/home" exact component={Home} />
-              <Route path="/Students" exact component={Students} />
+              <Route path="/" exact component={Home} />
+              <Route path="/page/:id" exact component={Students} />
+              <Route path="/services" exact component={Services} />
+              <Route path="/solutions" exact component={Solutions} />
+              <Route path="/portfolio" exact component={Students} />
               
+              <Route path="/blog" exact component={Students} />
               <Route path="/error" component={Error} />
               <Route exact path="/">
-                <Redirect to="/home" />
+                <Redirect to="/" />
               </Route>
               <Redirect to="/error" />
             </Switch>

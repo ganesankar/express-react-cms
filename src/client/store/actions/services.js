@@ -3,17 +3,17 @@ import { showToast } from './toast';
 import axios from 'axios';
 
 import { apiConfig } from '../../services/api';
-export const loadSemestersInit = () => ({
-  type: Types.LOAD_SEMESTERS_INIT,
+export const loadServicesInit = () => ({
+  type: Types.LOAD_SERVICES_INIT,
 });
 
-export const loadSemestersError = (error) => (dispatch, getState) => {
+export const loadServicesError = (error) => (dispatch, getState) => {
   dispatch(showToast({ title: 'Error', text: error }));
-  dispatch({ type: Types.LOAD_SEMESTERS_ERROR, payload: error });
+  dispatch({ type: Types.LOAD_SERVICES_ERROR, payload: error });
 };
 
-export const loadSemestersSuccess = (data) => ({
-  type: Types.LOAD_SEMESTERS_SUCCESS,
+export const loadServicesSuccess = (data) => ({
+  type: Types.LOAD_SERVICES_SUCCESS,
   payload: data,
 });
 
@@ -29,20 +29,20 @@ const errorHandler = (successfn, errorAction, dispatch) => {
   };
 };
 
-export const loadSemesters = (params, isLoadMoreRequest, callback) => async (
+export const loadServices = (params, isLoadMoreRequest, callback) => async (
   dispatch,
   getState,
 ) => {
-  dispatch(loadSemestersInit());
+  dispatch(loadServicesInit());
 
   errorHandler(
     async (params, isLoadMoreRequest, callback) => {
-      const baseUrl = `${apiConfig.base}${apiConfig.semesters.url}`;
+      const baseUrl = `${apiConfig.base}${apiConfig.services.url}`;
       const response = await axios.get(baseUrl);
-      dispatch(loadSemestersSuccess(response.data));
+      dispatch(loadServicesSuccess(response.data));
       if (callback) callback();
     },
-    loadSemestersError,
+    loadServicesError,
     dispatch,
   )(params, isLoadMoreRequest, callback);
 };
