@@ -81,7 +81,7 @@
     "rollup-plugin-svelte": "^4.3.1",
     "rollup-plugin-terser": "^3.0.0",
     "sirv-cli": "^0.2.2",
-    "svelte": "^2.16.1",
+    "svelte": "^3.49.0",
     "svelte-preprocess": "^2.4.3"
   },
   "proxy": "http://localhost:5000"
